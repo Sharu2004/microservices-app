@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  service1:
+    build: ./service-1
+    container_name: service1
+
+  service2:
+    build: ./service-2
+    container_name: service2
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - service1
+      - service2
