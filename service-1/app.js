@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 app.get('/', (req, res) => {
-  res.send("Service 1 running");
+  res.send("Service 1 update");
 });
 
 app.listen(3000, () => {
