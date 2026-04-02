@@ -21,7 +21,22 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /home/ubuntu/app
+            set -e
+            echo "Entering app directory..."
+            cd /home/ubuntu/app
+            echo "Current commit before update:"
+            git log --oneline -1
+
+            echo "Fetching latest code..."
             git fetch origin
-            git rest --hard origin/main
+
+            echo "Resetting to latest main..."
+            git reset --hard origin/main
+
+            echo "Commit after update:"
+            git log --oneline -1
+
+            echo "Rebuilding containers..."
             docker-compose down
-            docker-compose up -d --build
+            docker-compose build --no-cache
+            docker-compose up -d
